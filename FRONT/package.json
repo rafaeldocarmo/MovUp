@@ -15,9 +15,9 @@
     "pwa:analyze": "npx @vitejs/plugin-legacy --help"
   },
   "dependencies": {
-    "primereact": "^10.5.1",
-    "primeicons": "^6.1.0",
     "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.5.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"
@@ -28,9 +28,9 @@
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
     "prettier": "^3.2.5",
     "vite": "^5.2.8"
   }
