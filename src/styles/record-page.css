@@ -1,0 +1,11 @@
+.button-record{
+    justify-content: center;
+    gap: 16px;
+    width: 85%;
+    margin: auto;
+    border-radius: 40px;
+}
+
+.button-record .p-button-label{
+    flex: none;
+}
