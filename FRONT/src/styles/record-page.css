@@ -9,3 +9,143 @@
 .button-record .p-button-label{
     flex: none;
 }
+
+/* Camera styles */
+.camera-container {
+    position: relative;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.recording-timer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.recording-indicator {
+    width: 12px;
+    height: 12px;
+    background: #ff0000;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Camera controls */
+.camera-container .p-button {
+    width: 50px;
+    height: 50px;
+}
+
+.camera-container .p-button.p-button-rounded {
+    border-radius: 50%;
+}
+
+/* Recording Page Styles */
+.recording-page {
+    min-height: 100vh;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+.recording-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.camera-feed-container {
+    position: relative;
+    flex: 1;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+}
+
+.camera-feed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recording-indicator {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.recording-dot {
+    width: 12px;
+    height: 12px;
+    background: #ff0000;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+.recording-controls {
+    padding: 1rem;
+    background: white;
+    border-top: 1px solid #e9ecef;
+}
+
+.recording-button {
+    width: 200px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.action-button {
+    width: 150px;
+    height: 50px;
+    font-size: 14px;
+}
+
+.video-preview-card {
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+}
+
+.preview-video {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    background: #000;
+}
+
+.instructions-card {
+    margin: 1rem;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+}

@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import AppRoutes from './routes/AppRoutes';
 import BottomNavigation from './components/BottomNavigation.jsx';
@@ -9,17 +9,24 @@ import 'primeflex/primeflex.css';
 import './App.css';
 import { Header } from './components/Header.jsx';
 
+const AppContent = () => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
+  return (
+    <>
+      {!isAuthPage && <Header />}
+      <AppRoutes />
+      {!isAuthPage && <BottomNavigation />}
+    </>
+  );
+};
+
 function App() {
-
-  const hideLayout = location.pathname === '/login' || location.pathname === '/register';
-
-
   return (
     <BrowserRouter>
       <AuthProvider>
-        {!hideLayout && <Header />}
-        <AppRoutes />
-        {!hideLayout && <BottomNavigation />}
+        <AppContent />
       </AuthProvider>
     </BrowserRouter>
   );

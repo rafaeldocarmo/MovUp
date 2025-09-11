@@ -4,29 +4,40 @@ import { useAuth } from '../contexts/AuthContext';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
+import { Dropdown } from 'primereact/dropdown';
+import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Message } from 'primereact/message';
+import movup_logo from '../assets/movup_logo.png';
+import '../styles/login-page.css'
 import 'primeicons/primeicons.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    gender: '',
+    age: null,
+    password: ''
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  const genderOptions = [
+    { label: 'Masculino', value: 'male' },
+    { label: 'Feminino', value: 'female' },
+    { label: 'Outro', value: 'other' }
+  ];
+
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Nome completo é obrigatório';
-    } else if (formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Nome completo deve ter pelo menos 2 caracteres';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Nome é obrigatório';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Nome deve ter pelo menos 2 caracteres';
     }
 
     if (!formData.email) {
@@ -35,16 +46,20 @@ const Register = () => {
       newErrors.email = 'Email inválido';
     }
 
+    if (!formData.gender) {
+      newErrors.gender = 'Gênero é obrigatório';
+    }
+
+    if (!formData.age) {
+      newErrors.age = 'Idade é obrigatória';
+    } else if (formData.age < 13 || formData.age > 120) {
+      newErrors.age = 'Idade deve estar entre 13 e 120 anos';
+    }
+
     if (!formData.password) {
       newErrors.password = 'Senha é obrigatória';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
-    }
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Confirme sua senha';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'As senhas não coincidem';
     }
 
     setErrors(newErrors);
@@ -60,7 +75,7 @@ const Register = () => {
 
     setIsLoading(true);
     try {
-      const result = await register(formData.fullName, formData.email, formData.password);
+      const result = await register(formData.name, formData.email, formData.password);
       if (result.success) {
         navigate('/');
       } else {
@@ -88,10 +103,37 @@ const Register = () => {
     }
   };
 
+  const handleDropdownChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      gender: e.value
+    }));
+    if (errors.gender) {
+      setErrors(prev => ({
+        ...prev,
+        gender: ''
+      }));
+    }
+  };
+
+  const handleAgeChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      age: e.value
+    }));
+    if (errors.age) {
+      setErrors(prev => ({
+        ...prev,
+        age: ''
+      }));
+    }
+  };
+
   return (
-    <div className="page-container">
-      <div className="min-h-screen bg-white flex align-items-center justify-content-center p-4">
-        <Card className="w-full max-w-md">
+    <div className="page-container mb-0">
+      <div className="bg-white flex align-items-center justify-content-center flex-column login-page">
+        <img src={movup_logo} alt="" className='img-logo' />
+        <Card className="w-full max-w-md card-login">
           <div className="text-center mb-4">
             <h1 className="text-3xl font-bold text-black mb-2">Criar Conta</h1>
             <p className="text-black-alpha-80">Junte-se ao MovUp e comece a analisar suas corridas</p>
@@ -107,22 +149,22 @@ const Register = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="field">
-              <label htmlFor="fullName" className="block text-black font-semibold mb-2">
-                Nome Completo
+              <label htmlFor="name" className="block text-black font-semibold mb-2">
+                Nome
               </label>
               <InputText
-                id="fullName"
-                name="fullName"
+                id="name"
+                name="name"
                 type="text"
-                value={formData.fullName}
+                value={formData.name}
                 onChange={handleChange}
-                className={`w-full ${errors.fullName ? 'p-invalid' : ''}`}
-                placeholder="Digite seu nome completo"
-                aria-describedby="fullName-error"
+                className={`w-full ${errors.name ? 'p-invalid' : ''}`}
+                placeholder="Digite seu nome"
+                aria-describedby="name-error"
               />
-              {errors.fullName && (
-                <small id="fullName-error" className="p-error block mt-1">
-                  {errors.fullName}
+              {errors.name && (
+                <small id="name-error" className="p-error block mt-1">
+                  {errors.name}
                 </small>
               )}
             </div>
@@ -149,6 +191,51 @@ const Register = () => {
             </div>
 
             <div className="field">
+              <label htmlFor="gender" className="block text-black font-semibold mb-2">
+                Gênero
+              </label>
+              <Dropdown
+                id="gender"
+                value={formData.gender}
+                options={genderOptions}
+                onChange={handleDropdownChange}
+                className={`w-full ${errors.gender ? 'p-invalid' : ''}`}
+                placeholder="Selecione seu gênero"
+                aria-describedby="gender-error"
+              />
+              {errors.gender && (
+                <small id="gender-error" className="p-error block mt-1">
+                  {errors.gender}
+                </small>
+              )}
+            </div>
+
+            <div className="field">
+              <label htmlFor="age" className="block text-black font-semibold mb-2">
+                Idade
+              </label>
+              <InputNumber
+                id="age"
+                value={formData.age}
+                onValueChange={handleAgeChange}
+                className={`w-full ${errors.age ? 'p-invalid' : ''}`}
+                placeholder="Digite sua idade"
+                aria-describedby="age-error"
+                min={13}
+                max={120}
+                showButtons
+                buttonLayout="horizontal"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+              {errors.age && (
+                <small id="age-error" className="p-error block mt-1">
+                  {errors.age}
+                </small>
+              )}
+            </div>
+
+            <div className="field">
               <label htmlFor="password" className="block text-black font-semibold mb-2">
                 Senha
               </label>
@@ -170,33 +257,11 @@ const Register = () => {
               )}
             </div>
 
-            <div className="field">
-              <label htmlFor="confirmPassword" className="block text-black font-semibold mb-2">
-                Confirmar Senha
-              </label>
-              <Password
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className={`w-full ${errors.confirmPassword ? 'p-invalid' : ''}`}
-                placeholder="Confirme sua senha"
-                aria-describedby="confirmPassword-error"
-                feedback={false}
-                toggleMask
-              />
-              {errors.confirmPassword && (
-                <small id="confirmPassword-error" className="p-error block mt-1">
-                  {errors.confirmPassword}
-                </small>
-              )}
-            </div>
-
             <Button
               type="submit"
-              label={isLoading ? 'Criando Conta...' : 'Criar Conta'}
+              label={isLoading ? 'Criando Conta...' : 'Registrar'}
               icon={isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-user-plus'}
-              className="w-full p-button-raised bg-black text-yellow-400 border-none"
+              className="bg-black border-none login-button"
               disabled={isLoading}
             />
           </form>
@@ -209,25 +274,6 @@ const Register = () => {
                 className="text-black font-semibold hover:underline"
               >
                 Entre aqui
-              </Link>
-            </p>
-          </div>
-
-          <div className="text-center mt-3">
-            <p className="text-xs text-black-alpha-60">
-              Ao criar uma conta, você concorda com nossos{' '}
-              <Link 
-                to="/terms" 
-                className="text-black hover:underline"
-              >
-                Termos de Serviço
-              </Link>{' '}
-              e{' '}
-              <Link 
-                to="/privacy" 
-                className="text-black hover:underline"
-              >
-                Política de Privacidade
               </Link>
             </p>
           </div>

@@ -31,6 +31,10 @@ const Video = () => {
     }
   };
 
+  const handleRecord = () => {
+    navigate('/recording');
+  };
+
   const handleConfirm = () => {
     setIsLoading(true);
     // Simulate video processing
@@ -67,90 +71,90 @@ const Video = () => {
 
   return (
     <div className="page-container">
- 
-        {/* Instructions */}
-        <Card className="mb-4  shadow-none p-3 ">
-          <div className="text-left mb-3">
-            <h2>Instruções</h2>
+      {/* Instructions */}
+      <Card className="mb-4 shadow-none p-3">
+        <div className="text-left mb-3">
+          <h2>Instruções</h2>
+        </div>
+        <div className="text-left">
+          <p className="text-black-alpha-80 line-height-3 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+          <div className="text-center my-3">
+            <img src={biomecanica} style={{width: '80%'}}/>
           </div>
-          <div className="text-left">
-            <p className="text-black-alpha-80 line-height-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <div className="text-center my-3">
-              <img src={biomecanica} style={{width: '80%'}}/>
+          <p className="text-black-alpha-80 line-height-3 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+          <br/>
+          <p className="text-black-alpha-80 line-height-3 text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </Card>
+
+      {/* Action Buttons */}
+      <div className="grid grid-cols-1 gap-3 my-4">
+        <Button 
+          label="GRAVE SUA CORRIDA" 
+          icon="pi pi-video"
+          className="p-button-raised bg-yellow-400 text-black border-none button-record"
+          size="large"
+          style={{ height: '60px', fontSize: '16px' }}
+          onClick={handleRecord}
+        />
+        <Button 
+          label="CARREGUE SUA CORRIDA" 
+          icon="pi pi-upload"
+          className="p-button-raised bg-yellow-400 text-black border-none button-record"
+          size="large"
+          style={{ height: '60px', fontSize: '16px' }}
+          onClick={handleUpload}
+        />
+      </div>
+
+      {/* File Input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="video/*"
+        onChange={handleFileSelect}
+        style={{ display: 'none' }}
+      />
+
+      {/* Video Preview */}
+      {videoPreview && (
+        <Card className="mb-4 bg-yellow-50 border-round">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-black mb-3">Prévia do Vídeo</h3>
+            <video 
+              controls 
+              className="w-full max-w-md border-round mb-3"
+              style={{ maxHeight: '300px' }}
+            >
+              <source src={videoPreview} type={selectedVideo?.type} />
+              Seu navegador não suporta o elemento de vídeo.
+            </video>
+            <div className="flex gap-2 justify-content-center">
+              <Button 
+                label="Analisar" 
+                icon="pi pi-check"
+                className="p-button-success"
+                onClick={handleConfirm}
+              />
+              <Button 
+                label="Cancelar" 
+                icon="pi pi-times"
+                className="p-button-outlined p-button-secondary"
+                onClick={handleCancel}
+              />
             </div>
-            <p className="text-black-alpha-80 line-height-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <br/>
-            <p className="text-black-alpha-80 line-height-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
           </div>
         </Card>
-
-        {/* Action Buttons */}
-        <div className="grid grid-cols-1 gap-3 my-4">
-          <Button 
-            label="GRAVE SUA CORRIDA" 
-            icon="pi pi-video"
-            className="p-button-raised bg-yellow-400 text-black border-none button-record"
-            size="large"
-            style={{ height: '60px', fontSize: '16px' }}
-          />
-          <Button 
-            label="CARREGUE SUA CORRIDA" 
-            icon="pi pi-upload"
-            className="p-button-raised bg-yellow-400 text-black border-none button-record"
-            size="large"
-            style={{ height: '60px', fontSize: '16px' }}
-            onClick={handleUpload}
-          />
-        </div>
-
-        {/* File Input */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="video/*"
-          onChange={handleFileSelect}
-          style={{ display: 'none' }}
-        />
-
-        {/* Video Preview */}
-        {videoPreview && (
-          <Card className="mb-4 bg-yellow-50 border-round">
-            <div className="text-center">
-              <h3 className="text-xl font-semibold text-black mb-3">Prévia do Vídeo</h3>
-              <video 
-                controls 
-                className="w-full max-w-md border-round mb-3"
-                style={{ maxHeight: '300px' }}
-              >
-                <source src={videoPreview} type={selectedVideo?.type} />
-                Seu navegador não suporta o elemento de vídeo.
-              </video>
-              <div className="flex gap-2 justify-content-center">
-                <Button 
-                  label="Analisar" 
-                  icon="pi pi-check"
-                  className="p-button-success"
-                  onClick={handleConfirm}
-                />
-                <Button 
-                  label="Cancelar" 
-                  icon="pi pi-times"
-                  className="p-button-outlined p-button-secondary"
-                  onClick={handleCancel}
-                />
-              </div>
-            </div>
-          </Card>
-        )}
+      )}
     </div>
   );
 };
