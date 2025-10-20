@@ -11,6 +11,7 @@ const Profile = lazy(() => import('../pages/Profile'));
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const RecordingPage = lazy(() => import('../pages/RecordingPage'));
+const ReportPage = lazy(() => import('../pages/ReportPage'));
 
 // Loading component
 const LoadingSpinner = () => (
@@ -61,6 +62,7 @@ const AppRoutes = () => {
             <RecordingPage />
           </ProtectedRoute>
         } />
+        <Route path="/report" element={<ReportPage />} />
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />
